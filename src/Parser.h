@@ -11,6 +11,7 @@ public:
 
 private:
   std::string m_exec_name;
+  std::string delimiter;
 
 };
 
