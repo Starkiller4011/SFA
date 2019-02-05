@@ -12,7 +12,7 @@ StructureFunction::StructureFunction(List<double> const _timeCol, List<double> c
     std::cout << "Duration: " << T << ", Resolution: " << delta << ", Bins: " << nBins << std::endl;
 }
 
-void StructureFunction::Calculate() {
+void StructureFunction::Calculate() { // TODO - Fix nullptr bug, somewhere in here we get a core dump
     int N = timeCol.Size();
     for(int i = 0; i < (N - 1); i++) {
         for(int j = i; j < N; j++) {

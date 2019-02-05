@@ -68,6 +68,7 @@ clean: cleantests
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_DIR)
 	@$(RM) -r $(BIN_DIR)
+	@echo "Deleting $(V_DIR)"
 	@sudo $(RM) -r $(V_DIR)/$(V_FILE)
 	@sudo $(RM) -R $(V_DIR)
 
