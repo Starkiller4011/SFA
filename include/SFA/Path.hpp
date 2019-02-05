@@ -10,7 +10,7 @@ public:
   // Default constructor, null path
   Path();
   // Main constructor, requires string path
-  Path(std::string _path);
+  Path(std::string& _path);
   // Returns true if path is file, false if directory
   inline bool IsFile() const { return isFile; }
   // Returns absolute path

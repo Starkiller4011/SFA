@@ -4,6 +4,7 @@
 #include <ctime>
 
 #include "SFA/Parser.hpp"
+#include "SFA/Help.hpp"
 
 // Class constructor
 Parser::Parser(int argc, char* argv[]) {
@@ -15,7 +16,8 @@ Parser::Parser(int argc, char* argv[]) {
     ParseArgs(argc, argv);
   } else {
   // Else inform user of usage and exit
-    std::cout << "usage " << argv[0] << " [options] input_file" << std::endl;
+    std::string version = Version();
+    std::cout << "SFA " << version << " - Usage: " << argv[0] << " [options] input_file" << std::endl;
     exit(1);
   }
 }

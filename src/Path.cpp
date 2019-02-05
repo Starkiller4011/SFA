@@ -5,7 +5,7 @@ Path::Path() {
 }
 
 // Path constructor from string path
-Path::Path(std::string _path) {
+Path::Path(std::string& _path) {
     // Create filesystem path from passed string path
     fs::path passed_path = fs::path(_path);
     // Check if passed path is relative or absolute

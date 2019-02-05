@@ -16,6 +16,8 @@ BIN_DIR       = $(BUILD_DIR)/bin
 TEST_DIR      = test
 TEST_BUILD    = $(TEST_DIR)/build
 TEST_BIN      = $(TEST_BUILD)/bin
+V_FILE        = VERSION
+V_DIR         = /usr/share/sfa
 
 # Project executable
 BIN_NAME      = sfa
@@ -57,6 +59,7 @@ dirs:
 	@echo "Creating directtories"
 	@mkdir -p $(BUILD_DIR)
 	@mkdir -p $(BIN_DIR)
+	@sudo mkdir -p $(V_DIR)
 
 .PHONY: clean
 clean: cleantests
@@ -65,6 +68,8 @@ clean: cleantests
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_DIR)
 	@$(RM) -r $(BIN_DIR)
+	@sudo $(RM) -r $(V_DIR)/$(V_FILE)
+	@sudo $(RM) -R $(V_DIR)
 
 # Check the executable and symlink to the output
 .PHONY: all
@@ -72,6 +77,7 @@ all: $(BIN_DIR)/$(BIN_NAME)
 	@echo "Making symlink: $(BIN_NAME) -> $<"
 	@$(RM) $(BIN_NAME)
 	@cp $(BIN_DIR)/$(BIN_NAME) $(BIN_NAME)
+	@sudo cp $(V_FILE) $(V_DIR)/$(V_FILE)
 
 # Create the executable
 $(BIN_DIR)/$(BIN_NAME): $(OBJ_FILES)
@@ -108,9 +114,9 @@ cleantests:
 	@$(RM) -r $(TEST_BIN)
 
 # Check the test executable and symlink to the output
-.PHONY: test
-test: release
-test: testdirs
+.PHONY: tests
+tests: release
+tests: testdirs
 	@$(MAKE) testbuild
 
 .PHONY: testbuild
@@ -132,7 +138,9 @@ $(TEST_BUILD)/%.o: $(TEST_DIR)/%.$(SRC_EXT)
 .PHONY: install
 install: release
 	@sudo cp $(BIN_NAME) $(INSTALL_DIR)/$(BIN_NAME)
+	@sudo cp $(V_FILE) $(V_DIR)/$(V_FILE)
 
 .PHONY: uninstall
 uninstall:
 	@sudo $(RM) -r $(INSTALL_DIR)/$(BIN_NAME)
+	@sudo $(RM) -r $(V_DIR)/$(V_FILE)

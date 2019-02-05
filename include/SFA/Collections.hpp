@@ -1,6 +1,11 @@
 #ifndef COLLECTIONS_H
 #define COLLECTIONS_H
 
+#include <iostream>
+
+// TODO - Comment
+// TODO - Change direct passing of non-primitive types to pass-by-refrence
+
 template<typename T>
 class List;
 
@@ -38,10 +43,12 @@ public:
   ~List();
   List(List const&);
   void Purge();
+  void Print();
   void Append(T);
   void Prepend(T);
   T RemoveFirst();
   T RemoveLast();
+  T GetAtIndex(int) const;
   inline int Size() const { return size; }
   inline Node<T>* Head() const { return head; }
   inline Node<T>* Tail() const { return tail; }
@@ -68,7 +75,7 @@ List<T>::~List() {
 
 template<typename T>
 List<T>::List(List const& toCopy) {
-  Node<T>* copyNode = toCopy->Head();
+  Node<T>* copyNode = toCopy.Head();
   while(copyNode != nullptr) {
     Append(copyNode->data);
     copyNode = copyNode->next;
@@ -77,13 +84,25 @@ List<T>::List(List const& toCopy) {
 
 template<typename T>
 void List<T>::Purge() {
-  Node<T>* tmp = head;
-  while(tmp != nullptr) {
-    tmp = head->next;
-    delete head;
-    head = tmp;
+  while(head != nullptr) {
+    Node<T>* const tmp = head;
+    head = head->next;
+    delete tmp;
   }
-  size = 0;
+  tail = nullptr;
+}
+
+template<typename T>
+void List<T>::Print() {
+  Node<T>* tmp = head;
+  std::cout << "List (Size: " << size << ") = { " << std::endl;
+  std::cout << tmp->data;
+  tmp = tmp->next;
+  while(tmp != nullptr) {
+    std::cout << ", " << tmp->data;
+    tmp = tmp->next;
+  }
+  std::cout << " }" << std::endl;
 }
 
 template<typename T>
@@ -150,6 +169,24 @@ T List<T>::RemoveLast() {
     size--;
   }
   return elem;
+}
+
+template<typename T>
+T List<T>::GetAtIndex(int index) const {
+  if(index > size) {
+    std::cout << "ERROR: Index out of bounds: " << index << ", list size is " << size << std::endl;
+    exit(1);
+  }
+  Node<T>* tmp = head;
+  if(index == 0) {
+    return tmp->data;
+  } else {
+    for(int i = 1; i <= index; i++) {
+      std::cout << i << ": " << tmp->data << std::endl;
+      tmp = tmp->next;
+    }
+    return tmp->data;
+  }
 }
 
 #endif

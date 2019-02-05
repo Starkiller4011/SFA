@@ -35,9 +35,8 @@
 build/*
 build
 
-# VSCODE folder
+# VSCODE directory
 .vscode
 
-# Test folder
-test/*
-test
+# Test directory
+test/build
