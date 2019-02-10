@@ -69,16 +69,16 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < lines; i++) {
             int begin = 6 * i;
             int end = (6 * i) + 6;
-            int time = randomIntInRange(begin, end);
+            int time_value = randomIntInRange(begin, end);
             int value = randomIntInRange(0, 1357608741);
-            outFile << time << "    " << value << std::endl;
+            outFile << time_value << "    " << value << std::endl;
         }
     }
     return 0;
 }
 
 int randomIntInRange(int begin, int end) {
-    int result = rand() % end;
+    int result = rand() % (end - begin);
     result += begin;
     return result;
 }

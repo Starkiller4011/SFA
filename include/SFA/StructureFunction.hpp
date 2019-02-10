@@ -1,14 +1,17 @@
 #ifndef STRUCTUREFUNCTION_H
 #define STRUCTUREFUNCTION_H
 
-#include "SFA/Collections.hpp"
+#include <map>
+#include <vector>
+#include "Path.hpp"
 
 class StructureFunction {
 
 public:
-    StructureFunction(List<double> const, List<double> const);
+    StructureFunction(std::vector<double> const, std::vector<double> const);
     void Calculate();
     inline double Resolution() const { return delta; }
+    void WriteToFile(Path) const;
 
 private:
     void GetResolution();
@@ -17,10 +20,10 @@ private:
     int nBins;
     double delta;
     double T;
-    List<double> timeCol;
-    List<double> valueCol;
-    List<double> taus;
-    List<double> sqDiff;
+    std::vector<double> timeCol;
+    std::vector<double> valueCol;
+    std::map<double,std::vector<double>> interim;
+    std::map<double, double> structure_function;
 
 };
 

@@ -16,9 +16,7 @@ Parser::Parser(int argc, char* argv[]) {
     ParseArgs(argc, argv);
   } else {
   // Else inform user of usage and exit
-    std::string version = Version();
-    std::cout << "SFA " << version << " - Usage: " << argv[0] << " [options] input_file" << std::endl;
-    exit(1);
+    PrintHelp();
   }
 }
 
@@ -60,8 +58,10 @@ void Parser::ParseArgs(int argc, char* argv[]) {
     std::string currentDate = CurrentDate();
     // Get current filename without extension
     std::string inputFilename = inputFile.substr(0, inputFile.find("."));
+    std::cout << inputFilename << std::endl;
     // Set ouput file to SFA-[input]-[date].out
-    outputFile = "SFA-" + inputFilename + "-" + currentDate + ".out";
+    outputFile = inputFilename + "-" + currentDate + ".out";
+    std::cout << outputFile << std::endl;
   }
 }
 

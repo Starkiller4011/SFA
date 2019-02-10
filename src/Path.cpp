@@ -19,8 +19,10 @@ Path::Path(std::string& _path) {
         abs_path = fs::absolute(rel_path);
     }
     // Check if path is directory or file
-    if(!fs::is_directory(passed_path)) {
-        isFile = true;
+    if(fs::exists(passed_path)) {
+        if(!fs::is_directory(passed_path)) {
+            isFile = true;
+        } 
     } else {
         isFile = false;
     }

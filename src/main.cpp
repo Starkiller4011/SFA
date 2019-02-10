@@ -8,16 +8,26 @@
 #include "SFA/StructureFunction.hpp"
 
 int main(int argc, char* argv[]) {
+  std::cout << "Parse args" << std::endl;
   Parser* parser = new Parser(argc, argv);
+  std::cout << "Get input path from parsed args" << std::endl;
   std::string inPath = parser->InputFile();
+  std::cout << "Get output path from parsed args" << std::endl;
+  std::string outPath = parser->OutputFile();
+  std::cout << "Create new Path object from inPath: " << inPath << std::endl;
   Path InputPath(inPath);
-  Lightcurve lightcurve(InputPath);
-  lightcurve.LoadData();
-  int n = lightcurve.TimeCol().Size();
-  for(int i = 0; i < n; i++) {
-    std::cout << i << ": " << lightcurve.TimeCol().GetAtIndex(i) << std::endl;
+  Path OutputPath(outPath);
+  if(InputPath.IsFile()) {
+    std::cout << "Create new Lightcurce instance from InputPath: " << InputPath.Absolute() << std::endl;
+    Lightcurve lightcurve(InputPath);
+    std::cout << "Load data into lightcurve" << std::endl;
+    lightcurve.LoadData();
+    std::cout << "Generating structure function" << std::endl;
+    StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol());
+    sf.Calculate();
+    sf.WriteToFile(OutputPath);
+  } else {
+    std::cout << "Input file: " << InputPath.Absolute() << " does not exist or is not a file" << std::endl;
   }
-  StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol());
-  sf.Calculate();
   return 0;
 }

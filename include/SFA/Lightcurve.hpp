@@ -1,7 +1,7 @@
 #ifndef LIGHTCURVE_H
 #define LIGHTCURVE_H
 
-#include "SFA/Collections.hpp"
+#include <vector>
 
 class Lightcurve {
 
@@ -9,17 +9,15 @@ public:
     Lightcurve(Path _path);
     void SetDelimiter(std::string _delimiter);
     void LoadData();
-    inline List<double> TimeCol() const { return timeCol; }
-    inline List<double> ValueCol() const { return valueCol; }
-
-private:
+    inline std::vector<double> TimeCol() const { return timeCol; }
+    inline std::vector<double> ValueCol() const { return valueCol; }
 
 private:
     bool usesDelimiter; // Not currently implemented
     std::string delimiter; // TODO - implement delimiter usage
     Path datafilePath;
-    List<double> timeCol;
-    List<double> valueCol;
+    std::vector<double> timeCol;
+    std::vector<double> valueCol;
 
 };
 

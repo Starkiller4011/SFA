@@ -108,8 +108,10 @@ testdirs:
 cleantests:
 	@echo "Deleting $(TEST_NAME) symlink"
 	@$(RM) -r $(TEST_NAME)
-	@echo "Deleting any generated test files"
+	@echo "Deleting any generated test input files"
 	@$(RM) -r $(TEST_DIR)/*.in
+	@echo "Deleting any generated test output files"
+	@$(RM) -r $(TEST_DIR)/*.out
 	@echo "Deleting directories"
 	@$(RM) -R $(TEST_BUILD)
 	@$(RM) -r $(TEST_BIN)

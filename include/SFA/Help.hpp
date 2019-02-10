@@ -15,4 +15,11 @@ static std::string Version() {
     return version;
 }
 
+static void PrintHelp() {
+    // inform user of usage and exit
+    std::string version = Version();
+    std::cout << "SFA " << version << " - Usage: sfa [options] input_file" << std::endl;
+    exit(1);
+}
+
 #endif
