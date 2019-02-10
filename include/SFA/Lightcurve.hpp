@@ -1,23 +1,23 @@
 #ifndef LIGHTCURVE_H
 #define LIGHTCURVE_H
 
-#include "Collections.hpp"
+#include <vector>
 
 class Lightcurve {
 
 public:
-    Lightcurve();
+    Lightcurve(Path _path);
     void SetDelimiter(std::string _delimiter);
-
-private:
     void LoadData();
+    inline std::vector<double> TimeCol() const { return timeCol; }
+    inline std::vector<double> ValueCol() const { return valueCol; }
 
 private:
     bool usesDelimiter; // Not currently implemented
     std::string delimiter; // TODO - implement delimiter usage
-    Path inputPath;
-    List<double> timeCol;
-    List<double> valueCol;
+    Path datafilePath;
+    std::vector<double> timeCol;
+    std::vector<double> valueCol;
 
 };
 
