@@ -3,14 +3,17 @@
 #include <string>
 #include <ctime>
 
-#include "SFA/Parser.hpp"
-#include "SFA/Help.hpp"
+#include "SFA/Parser.h"
+#include "SFA/Help.h"
+
+namespace sfa {
 
 // Class constructor
 Parser::Parser(int argc, char* argv[]) {
   // Set defaul values
   delimiter = "\0";
-  specifiedOutput = false;
+  specified_output = false;
+  verbose_mode = false;
   // If args were passed parse args
   if (argc > 1) {
     ParseArgs(argc, argv);
@@ -37,31 +40,35 @@ void Parser::ParseArgs(int argc, char* argv[]) {
     } else if((arg == "-o") || (arg == "--output")) {
       // Set output file to passed option and increment i to skip to next arg
       // TODO - handle possibility of '-o' improper usage
-      specifiedOutput = true;
-      outputFile = argv[i + 1];
+      specified_output = true;
+      output_file = argv[i + 1];
       usedArgs += 2;
       i++;
+    } else if((arg == "-v") || (arg == "--verbose")) {
+      // Verbose mode flag
+      verbose_mode = true;
+      usedArgs++;
     }
   }
   // If there are still args left after user passed options
   if(usedArgs < (argc - 1)) {
     // Set the input file
-    inputFile = argv[argc - 1];
+    input_file = argv[argc - 1];
   } else {
   // Else inform user of usage and exit
     std::cout << "usage " << argv[0] << " [options] input_file" << std::endl;
-    exit(1);
+    exit(1); //TODO - Standardize exit codes to be meaningful, currently all are 1 or 0 if no errors
   }
   // If the user did not set a specific output file
-  if(!specifiedOutput) {
+  if(!specified_output) {
     // Get current date in format mm-dd-yyyy
     std::string currentDate = CurrentDate();
     // Get current filename without extension
-    std::string inputFilename = inputFile.substr(0, inputFile.find("."));
-    std::cout << inputFilename << std::endl;
+    std::string input_filename = input_file.substr(0, input_file.find("."));
+    std::cout << input_filename << std::endl;
     // Set ouput file to SFA-[input]-[date].out
-    outputFile = inputFilename + "-" + currentDate + ".out";
-    std::cout << outputFile << std::endl;
+    output_file = input_filename + "-" + currentDate + ".out";
+    std::cout << output_file << std::endl;
   }
 }
 
@@ -91,4 +98,6 @@ std::string Parser::CurrentDate() {
   date += "-";
   date += std::to_string(year);
   return date;
+}
+
 }

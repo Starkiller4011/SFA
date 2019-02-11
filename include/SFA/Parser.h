@@ -1,17 +1,20 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <string>
+
+namespace sfa {
+
 class Parser {
 
 public:
   // Constructor is dependant on command line args passed to main
   Parser(int , char*[]);
-  // Returns passed input file, input file is required
-  inline std::string InputFile() const { return inputFile; }
-  // Returns output file
-  inline std::string OutputFile() const { return outputFile; }
-  // Returns delimiter
+  // Public getters
+  inline std::string InputFile() const { return input_file; }
+  inline std::string OutputFile() const { return output_file; }
   inline std::string Delimiter() const { return delimiter; }
+  inline bool Verbose() const { return verbose_mode; }
 
 private:
   // Parse the command line args passed
@@ -21,10 +24,13 @@ private:
 
 private:
   std::string delimiter;
-  std::string inputFile;
-  std::string outputFile;
-  bool specifiedOutput;
+  std::string input_file;
+  std::string output_file;
+  bool specified_output;
+  bool verbose_mode;
 
 };
+
+}
 
 #endif

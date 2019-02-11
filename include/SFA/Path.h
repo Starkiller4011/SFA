@@ -4,6 +4,8 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
+namespace sfa {
+
 class Path {
 
 public:
@@ -24,5 +26,7 @@ private:
   fs::path rel_path;
 
 };
+
+}
 
 #endif

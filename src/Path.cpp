@@ -1,4 +1,6 @@
-#include "SFA/Path.hpp"
+#include "SFA/Path.h"
+
+namespace sfa {
 
 // Default null path constructor
 Path::Path() {
@@ -26,4 +28,6 @@ Path::Path(std::string& _path) {
     } else {
         isFile = false;
     }
+}
+
 }
