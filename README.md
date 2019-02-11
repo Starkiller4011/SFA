@@ -4,7 +4,7 @@ Version 0.6.8
 
 Usage:
 
-sfa [options] path/to/input_file
+    sfa [options] path/to/input_file
 
 Options:
 
