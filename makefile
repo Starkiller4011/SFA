@@ -7,7 +7,8 @@
 CXX          ?= g++
 
 # Release install directory
-INSTALL_DIR   = /usr/bin
+SYS_INSTALL_DIR   = /usr/bin
+USR_INSTALL_DIR   = ~/.sfa
 
 # Project paths
 SRC_DIR       = src
@@ -16,8 +17,6 @@ BIN_DIR       = $(BUILD_DIR)/bin
 TEST_DIR      = test
 TEST_BUILD    = $(TEST_DIR)/build
 TEST_BIN      = $(TEST_BUILD)/bin
-V_FILE        = VERSION
-V_DIR         = /usr/share/sfa
 
 # Project executable
 BIN_NAME      = sfa
@@ -32,10 +31,12 @@ HEAD_EXT      = h
 # Sorted by most recently modified
 SRC_FILES     = $(shell find $(SRC_DIR) -name '*.$(SRC_EXT)' | cut -f2-)
 TEST_SRC      = $(shell find $(TEST_DIR) -name '*.$(SRC_EXT)' | cut -f2-)
+
 # Set object names
 # Must strip source directory and prepend build directory
 OBJ_FILES     = $(SRC_FILES:$(SRC_DIR)/%.$(SRC_EXT)=$(BUILD_DIR)/%.o)
 TEST_OBJ      = $(TEST_SRC:$(TEST_DIR)/%.$(SRC_EXT)=$(TEST_BUILD)/%.o)
+
 # Set the dependency files for header dependencies
 DEPS          = $(OBJ_FILES:.o=.d)
 
@@ -43,6 +44,7 @@ DEPS          = $(OBJ_FILES:.o=.d)
 COMPILE_FLAGS = -Wall -Wextra -g 
 LDFLAGS       = -std=c++17 -lstdc++fs
 INCLUDES      = -I include/ -I /usr/local/include
+
 # Space-separated pkg-config libraries
 LIBS          = 
 
@@ -59,7 +61,6 @@ dirs:
 	@echo "Creating directtories"
 	@mkdir -p $(BUILD_DIR)
 	@mkdir -p $(BIN_DIR)
-	@sudo mkdir -p $(V_DIR)
 
 .PHONY: clean
 clean: cleantests
@@ -68,9 +69,6 @@ clean: cleantests
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_DIR)
 	@$(RM) -r $(BIN_DIR)
-	@echo "Deleting $(V_DIR)"
-	@sudo $(RM) -r $(V_DIR)/$(V_FILE)
-	@sudo $(RM) -R $(V_DIR)
 
 # Check the executable and symlink to the output
 .PHONY: all
@@ -78,7 +76,6 @@ all: $(BIN_DIR)/$(BIN_NAME)
 	@echo "Making symlink: $(BIN_NAME) -> $<"
 	@$(RM) $(BIN_NAME)
 	@cp $(BIN_DIR)/$(BIN_NAME) $(BIN_NAME)
-	@sudo cp $(V_FILE) $(V_DIR)/$(V_FILE)
 
 # Create the executable
 $(BIN_DIR)/$(BIN_NAME): $(OBJ_FILES)
@@ -138,12 +135,29 @@ $(TEST_BUILD)/%.o: $(TEST_DIR)/%.$(SRC_EXT)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 
 # Proper install and uninstall
+
+# System-wide install
 .PHONY: install
 install: release
-	@sudo cp $(BIN_NAME) $(INSTALL_DIR)/$(BIN_NAME)
-	@sudo cp $(V_FILE) $(V_DIR)/$(V_FILE)
+	@sudo cp $(BIN_NAME) $(SYS_INSTALL_DIR)/$(BIN_NAME)
+	@$(MAKE) clean
 
 .PHONY: uninstall
 uninstall:
 	@sudo $(RM) -r $(INSTALL_DIR)/$(BIN_NAME)
-	@sudo $(RM) -r $(V_DIR)/$(V_FILE)
+
+# User-specific install
+.PHONY: user-install
+user-install: release
+	@mkdir -p $(USR_INSTALL_DIR)
+	@cp $(BIN_NAME) $(USR_INSTALL_DIR)/$(BIN_NAME)
+	@echo "sfa installed to $(USR_INSTALL_DIR), add it to your aliases to be able to execute from your terminal"
+	@echo "alias sfa=~/.sfa/sfa"
+	@$(MAKE) clean
+
+.PHONY: user-uninstall
+user-uninstall:
+	@echo "Removing $(USR_INSTALL_DIR)/$(BIN_NAME)"
+	@$(RM) -r $(USR_INSTALL_DIR)/$(BIN_NAME)
+	@echo "Removing $(USR_INSTALL_DIR)"
+	@$(RM) -r $(USR_INSTALL_DIR)

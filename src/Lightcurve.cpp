@@ -2,8 +2,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "SFA/Path.hpp"
-#include "SFA/Lightcurve.hpp"
+#include "SFA/Path.h"
+#include "SFA/Lightcurve.h"
+
+namespace sfa {
 
 Lightcurve::Lightcurve(Path _path) {
     datafilePath = _path;
@@ -20,4 +22,6 @@ void Lightcurve::LoadData() {
         timeCol.push_back(t);
         valueCol.push_back(v);
     }
+}
+
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 
+namespace sfa {
+
 class Lightcurve {
 
 public:
@@ -20,5 +22,7 @@ private:
     std::vector<double> valueCol;
 
 };
+
+}
 
 #endif
