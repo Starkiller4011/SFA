@@ -13,6 +13,7 @@ public:
     void LoadData();
     inline std::vector<double> TimeCol() const { return timeCol; }
     inline std::vector<double> ValueCol() const { return valueCol; }
+    inline std::vector<double> ErrorCol() const { return errorCol; }
 
 private:
     bool usesDelimiter; // Not currently implemented
@@ -20,6 +21,7 @@ private:
     Path datafilePath;
     std::vector<double> timeCol;
     std::vector<double> valueCol;
+    std::vector<double> errorCol;
 
 };
 
