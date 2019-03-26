@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-static std::string VERSION = "0.7.0";
+static std::string VERSION = "0.9.4";
 
 static void PrintHelp() {
     // inform user of usage and exit

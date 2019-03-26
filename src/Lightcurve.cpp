@@ -14,13 +14,15 @@ Lightcurve::Lightcurve(Path _path) {
 void Lightcurve::LoadData() {
     std::ifstream dataFile;
     dataFile.open(datafilePath.Absolute());
-    double t, v;
+    double t, v, e;
     // TODO - Implement handling for files with an extra empty line at the end
     while(!dataFile.eof()) {
         dataFile >> t;
         dataFile >> v;
+        dataFile >> e;
         timeCol.push_back(t);
         valueCol.push_back(v);
+        errorCol.push_back(e);
     }
 }
 
