@@ -46,7 +46,7 @@ int RunInVerboseMode(Parser* parser) {
     lightcurve.LoadData(); // TODO - Implement verbose mode in Lightcurve::LoadData()
     std::cout << "Creating new Structure Function object" << std::endl;
     // TODO - Implement verbose mode in Lightcurve::TimeCol() and Lightcurve::ValueCol()
-    StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol()); // TODO - Implement verbose mode in StructureFunction::StructureFunction()
+    StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol(), lightcurve.ErrorCol()); // TODO - Implement verbose mode in StructureFunction::StructureFunction()
     std::cout << "Calculating structure function from data" << std::endl;
     sf.Calculate(); // TODO - Implement verbose mode in StructureFunction::Calculate()
     std::cout << "Writing structure function data to " << OutputPath.Absolute().string() << std::endl;
@@ -66,7 +66,7 @@ int RunInQuietMode(Parser* parser) {
   if(InputPath.IsFile()) {
     Lightcurve lightcurve(InputPath);
     lightcurve.LoadData();
-    StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol());
+    StructureFunction sf(lightcurve.TimeCol(), lightcurve.ValueCol(), lightcurve.ErrorCol());
     sf.Calculate();
     sf.WriteToFile(OutputPath);
     return 0;

@@ -6,9 +6,10 @@
 
 namespace sfa {
 
-  StructureFunction::StructureFunction(std::vector<double> const _timeCol, std::vector<double> const _valueCol) {
+  StructureFunction::StructureFunction(std::vector<double> const _timeCol, std::vector<double> const _valueCol, std::vector<double> const _errorCol) {
     timeCol = _timeCol;
     valueCol = _valueCol;
+    errorCol = _errorCol;
     T = timeCol.back() - timeCol.front();
     GetResolution();
     nBins = (int)(T / (delta + 1));

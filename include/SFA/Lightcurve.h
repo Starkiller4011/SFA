@@ -5,6 +5,8 @@
 
 namespace sfa {
 
+    // TODO - Refactor Lightcurve class to TimeSeries class to better represent he domain the structure function can operate on
+
 class Lightcurve {
 
 public:
