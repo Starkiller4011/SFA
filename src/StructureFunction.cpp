@@ -16,7 +16,9 @@ namespace sfa {
     std::cout << "Duration: " << T << ", Resolution: " << delta << ", Bins: " << nBins << std::endl;
   }
 
-  void StructureFunction::Calculate() { // TODO - Fix nullptr bug, somewhere in here we get a core dump
+  void StructureFunction::Calculate() { // TODO - Fix nullptr bug, somewhere in here we get a core dump, was this fixed?
+  // TODO - Subtract 2 times the mean variance of the measurement uncertainties
+  // TODO - Generate error estimates on the structure function following sigma/N/2 root
     int N = timeCol.size();
     for(int i = 0; i < (N - 1); i++) {
       for(int j = i; j < N; j++) {
