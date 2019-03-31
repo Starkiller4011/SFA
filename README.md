@@ -1,6 +1,6 @@
 SFA - Structure Function Analysis
 
-Version 0.9.4
+Version 0.9.9
 
 Usage:
 

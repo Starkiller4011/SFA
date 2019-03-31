@@ -49,10 +49,10 @@ int main(int argc, char* argv[]) {
         } catch (std::out_of_range const &ex) {
             std::cerr << "Number out of range: " << arg << std::endl;
         }
-        lines = randomIntInRange(0, 30000);
+        lines = randomIntInRange(0, 2000);
     } else {
-        lines = randomIntInRange(0, 30000);
-        files = randomIntInRange(0, 100);
+        lines = randomIntInRange(0, 2000);
+        files = randomIntInRange(0, 10);
     }
     std::cout << "Generating test input files..." << std::endl;
     for (int i = 0; i < files; i++) {
