@@ -61,15 +61,15 @@ namespace sfa {
       for(int i = 0; i < N_i; i++) {
         sfav += sfit->second[i];
       }
-      std::cout << "sfav: " << sfav;
+      //std::cout << "sfav: " << sfav;
       sfav /= N_i;
-      std::cout << ", sfav: " << sfav <<std::endl;
+      //std::cout << ", sfav: " << sfav <<std::endl;
       double rms = 0;
       for(int i = 0; i < N_i; i++) {
         rms += std::pow((sfit->second[i] - sfav), 2);
       }
       rms = std::sqrt(rms / N_i);
-      std::cout << "N_i: " << N_i << ", rms: " << rms << std::endl;
+      //std::cout << "N_i: " << N_i << ", rms: " << rms << std::endl;
       double error = rms / std::sqrt(N_i / 2);
       btau->second = error;
     }
@@ -104,8 +104,8 @@ namespace sfa {
 
   // Subtract a linear fit from the data to remove artificial steepening
   void StructureFunction::SubtractLinearFit() {
-    double B0 = 4.86534451468971E-11;
-    double B1 = -7.25813465813886E-16;
+    double B0 = -5.64957030795613e-11;
+    double B1 = 1.5645567920416e-15;
     int N = valueCol.size();
     for(int i = 0; i < N; i++) {
       //std::cout << "Index: " << i << std::endl;
