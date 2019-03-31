@@ -144,7 +144,9 @@ install: release
 
 .PHONY: uninstall
 uninstall:
-	@sudo $(RM) -r $(INSTALL_DIR)/$(BIN_NAME)
+	@echo "Removing $(BIN_NAME) from $(SYS_INSTALL_DIR)/$(BIN_NAME)"
+	@sudo $(RM) -r $(SYS_INSTALL_DIR)/$(BIN_NAME)
+	@$(MAKE) clean
 
 # User-specific install
 .PHONY: user-install

@@ -17,6 +17,11 @@ namespace sfa {
 
     private:
         void GetResolution();
+        void InitializeMaps();
+        void SubtractLinearFit();
+        void SortUncertainties();
+        void CalculateRawValues();
+        void BinSF();
 
     private:
         int nBins;
@@ -25,8 +30,15 @@ namespace sfa {
         std::vector<double> timeCol;
         std::vector<double> valueCol;
         std::vector<double> errorCol;
-        std::map<double,std::vector<double>> interim;
-        std::map<double, double> structure_function;
+        std::map<double, std::vector<double>> errors;
+        std::map<double, std::vector<double>> interim;
+
+        std::map<double, double> raw_structure_function;
+        std::map<double, std::vector<double>> binned_structure_function_interim;
+        std::map<double, std::vector<double>> binned_errors;
+
+        std::map<double, double> binned_structure_function;
+        std::map<double, double> structure_function_error;
 
     };
 
