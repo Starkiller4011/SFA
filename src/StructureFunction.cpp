@@ -104,8 +104,8 @@ namespace sfa {
 
   // Subtract a linear fit from the data to remove artificial steepening
   void StructureFunction::SubtractLinearFit() {
-    double B0 = -5.64957030795613e-11;
-    double B1 = 1.5645567920416e-15;
+    double B0 = 1.51563340063668e-14;
+    double B1 = 1.07110560787575e-16;
     int N = valueCol.size();
     for(int i = 0; i < N; i++) {
       //std::cout << "Index: " << i << std::endl;
@@ -136,7 +136,6 @@ namespace sfa {
         }
       }
     }
-    //for(auto it = )
   }
 
   // Sort squared measurement differences based on tau

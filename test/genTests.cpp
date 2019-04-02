@@ -1,11 +1,21 @@
 #include <stdexcept>
+#include <algorithm>
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include <vector>
 #include <string>
-#include <time.h>
+#include <ctime>
+#include <cmath>
+#include <map>
 
 int randomIntInRange(int begin, int end);
+double GenerateValue(double generator);
+double GenerateDifference(double resolution);
+double GenerateUncertainty();
+
+const int MIN_RES = 1;
+const int MAX_RES = 14;
 
 int main(int argc, char* argv[]) {
     int lines;
@@ -66,13 +76,31 @@ int main(int argc, char* argv[]) {
         std::cout << filename << std::endl;
         std::ofstream outFile;
         outFile.open(filename);
-        for (int i = 0; i < lines; i++) {
-            int begin = 6 * i;
-            int end = (6 * i) + 6;
-            int time_value = randomIntInRange(begin, end);
-            int value = randomIntInRange(0, 1357608741);
-            outFile << time_value << "    " << value << std::endl;
+        double duration = randomIntInRange(300000, 600000) / randomIntInRange(10, 100);
+        double res = duration / lines;
+        double time_value = 0;
+        std::vector<double> differences;
+        std::map<double, double> values;
+        std::map<double, double> errors;
+        for(int j = 0; j < lines; j++) {
+            double remaining = duration - time_value;
+            double resolution = remaining / (lines - j);
+            double difference = GenerateDifference(resolution);
+            differences.push_back(difference);
+            time_value += difference;
         }
+        std::random_shuffle(differences.begin(), differences.end());
+        time_value = 0;
+        for(unsigned int index = 0; index < differences.size(); index++) {
+            values.insert({time_value, 0});
+            errors.insert({time_value, 0});
+            time_value += differences[i];
+        }
+        for(auto vit = values.begin(); vit != values.end(); vit++) {
+            auto eit = errors.find(vit->first);
+
+        }
+        std::cout << "Done!" << std::endl;
     }
     return 0;
 }
@@ -81,4 +109,26 @@ int randomIntInRange(int begin, int end) {
     int result = rand() % (end - begin);
     result += begin;
     return result;
+}
+
+double GenerateValue(double generator) {
+    double result = std::sin(generator);
+    result += (4 * std::sin(generator / 2));
+    result += (2 * std::sin((-1 * generator) / 4));
+    result += (1.5 * std::sin(generator / 50));
+    result += std::cos(generator);
+    result += (8 * std::cos((-1 * generator) / 4));
+    result /= 1e12;
+    return result;
+}
+
+double GenerateDifference(double resolution) {
+    int upper = (int)(10 * resolution);
+    int lower = (int)(resolution);
+    int tmp = randomIntInRange(lower, upper);
+    return tmp / 5;
+}
+
+double GenerateUncertainty() {
+    return randomIntInRange(1, 1000) / 1e14;
 }
