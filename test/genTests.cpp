@@ -66,16 +66,19 @@ int main(int argc, char* argv[]) {
     }
     std::cout << "Generating test input files..." << std::endl;
     for (int i = 0; i < files; i++) {
-        std::string filename;
+        std::string filename1, filename2;
         std::cout << i << ": ";
         if (i < 10) {
-            filename = "test/test.0" + std::to_string(i) + ".in";
+            filename1 = "test/test.0" + std::to_string(i) + ".tsv";
+            filename2 = "test/test.0" + std::to_string(i) + ".csv";
         } else {
-            filename = "test/test." + std::to_string(i) + ".in";
+            filename1 = "test/test." + std::to_string(i) + ".tsv";
+            filename2 = "test/test." + std::to_string(i) + ".csv";
         }
-        std::cout << filename << std::endl;
-        std::ofstream outFile;
-        outFile.open(filename);
+        std::cout << filename1 << " & " << filename2 << std::endl;
+        std::ofstream outFile1, outFile2;
+        outFile1.open(filename1);
+        outFile2.open(filename2);
         double duration = randomIntInRange(300000, 600000) / randomIntInRange(10, 100);
         double res = duration / lines;
         double time_value = 0;
@@ -92,14 +95,18 @@ int main(int argc, char* argv[]) {
         std::random_shuffle(differences.begin(), differences.end());
         time_value = 0;
         for(unsigned int index = 0; index < differences.size(); index++) {
-            values.insert({time_value, 0});
-            errors.insert({time_value, 0});
+            values.insert({time_value, GenerateValue(time_value)});
+            errors.insert({time_value, GenerateUncertainty()});
             time_value += differences[i];
         }
+        outFile2 << "Time,Value,+-" << std::endl;
         for(auto vit = values.begin(); vit != values.end(); vit++) {
             auto eit = errors.find(vit->first);
-
+            outFile1 << vit->first << " " << vit->second << " " << eit->second << std::endl;
+            outFile2 << vit->first << "," << vit->second << "," << eit->second << std::endl;
         }
+        outFile1.close();
+        outFile2.close();
         std::cout << "Done!" << std::endl;
     }
     return 0;
@@ -113,12 +120,12 @@ int randomIntInRange(int begin, int end) {
 
 double GenerateValue(double generator) {
     double result = std::sin(generator);
-    result += (4 * std::sin(generator / 2));
-    result += (2 * std::sin((-1 * generator) / 4));
-    result += (1.5 * std::sin(generator / 50));
-    result += std::cos(generator);
-    result += (8 * std::cos((-1 * generator) / 4));
-    result /= 1e12;
+    // result += (4 * std::sin(generator / 2));
+    // result += (2 * std::sin((-1 * generator) / 4));
+    // result += (1.5 * std::sin(generator / 50));
+    // result += std::cos(generator);
+    // result += (8 * std::cos((-1 * generator) / 4));
+    // result /= 1e12;
     return result;
 }
 
@@ -130,5 +137,5 @@ double GenerateDifference(double resolution) {
 }
 
 double GenerateUncertainty() {
-    return randomIntInRange(1, 1000) / 1e14;
+    return randomIntInRange(1, 10) / 1e14;
 }

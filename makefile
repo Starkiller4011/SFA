@@ -106,7 +106,8 @@ cleantests:
 	@echo "Deleting $(TEST_NAME) symlink"
 	@$(RM) -r $(TEST_NAME)
 	@echo "Deleting any generated test input files"
-	@$(RM) -r $(TEST_DIR)/*.in
+	@$(RM) -r $(TEST_DIR)/*.csv
+	@$(RM) -r $(TEST_DIR)/*.tsv
 	@echo "Deleting any generated test output files"
 	@$(RM) -r $(TEST_DIR)/*.out
 	@echo "Deleting directories"
