@@ -104,15 +104,15 @@ namespace sfa {
 
   // Subtract a linear fit from the data to remove artificial steepening
   void StructureFunction::SubtractLinearFit() {
-    double B0 = 1.51563340063668e-14;
-    double B1 = 1.07110560787575e-16;
+    double B0 = -2.71599448495183e-7;
+    double B1 = 1.64427967530241e-11;
+    double B2 = -3.31280436595384e-16;
+    double B3 = 2.22159804429092e-21;
     int N = valueCol.size();
     for(int i = 0; i < N; i++) {
       //std::cout << "Index: " << i << std::endl;
-      double predicted = B0 + B1 * timeCol[i];
-      double newValue = valueCol[i] - predicted;
-      //std::cout << "Old Value: " << valueCol[i] << ", New Value: " << newValue << std::endl;
-      valueCol[i] = newValue;
+      double predicted = B0 + (B1 * timeCol[i]) + (B2 * std::pow(timeCol[i], 2)) + (B3 * std::pow(timeCol[i], 3));
+      valueCol[i] -= predicted;
     }
   }
 
