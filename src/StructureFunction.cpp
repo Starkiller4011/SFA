@@ -19,8 +19,12 @@ namespace sfa {
   void StructureFunction::Calculate() {
     std::cout << "Initializing maps" << std::endl;
     InitializeMaps();
-    std::cout << "Subtracting linear fit" << std::endl;
-    SubtractLinearFit(); // TODO - Fix this, currently manually inputing linear fit
+
+    // Linear fit reduction should be applied before running SFA
+
+    // std::cout << "Subtracting linear fit" << std::endl;
+    // SubtractLinearFit(); // TODO - Fix this, currently manually inputing linear fit
+
     std::cout << "Sorting measurement uncertainties" << std::endl;
     SortUncertainties();
     std::cout << "Calculating raw structure function values" << std::endl;
@@ -102,19 +106,21 @@ namespace sfa {
     }
   }
 
-  // Subtract a linear fit from the data to remove artificial steepening
-  void StructureFunction::SubtractLinearFit() {
-    double B0 = -2.71599448495183e-7;
-    double B1 = 1.64427967530241e-11;
-    double B2 = -3.31280436595384e-16;
-    double B3 = 2.22159804429092e-21;
-    int N = valueCol.size();
-    for(int i = 0; i < N; i++) {
-      //std::cout << "Index: " << i << std::endl;
-      double predicted = B0 + (B1 * timeCol[i]) + (B2 * std::pow(timeCol[i], 2)) + (B3 * std::pow(timeCol[i], 3));
-      valueCol[i] -= predicted;
-    }
-  }
+  // Hard-coded linear fit reduction should be applied to the data prior to use of SFA
+
+  // // Subtract a linear fit from the data to remove artificial steepening
+  // void StructureFunction::SubtractLinearFit() {
+  //   double B0 = -2.71599448495183e-7;
+  //   double B1 = 1.64427967530241e-11;
+  //   double B2 = -3.31280436595384e-16;
+  //   double B3 = 2.22159804429092e-21;
+  //   int N = valueCol.size();
+  //   for(int i = 0; i < N; i++) {
+  //     //std::cout << "Index: " << i << std::endl;
+  //     double predicted = B0 + (B1 * timeCol[i]) + (B2 * std::pow(timeCol[i], 2)) + (B3 * std::pow(timeCol[i], 3));
+  //     valueCol[i] -= predicted;
+  //   }
+  // }
 
   // Sort measurement uncertainties based on tau
   void StructureFunction::SortUncertainties() {
