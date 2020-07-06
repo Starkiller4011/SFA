@@ -92,6 +92,10 @@ Uninstallation:
             rm -R SFA
 
 
+If using this software for publication purposes please cite Gallo, L. C., Blue, D. M., Grupe, D., Komossa, S., & Wilkins, D. R. 2018, MNRAS , 478,2557
+Nasa ADS: https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.2557G/abstract
+arxhiv: https://arxiv.org/abs/1805.00300
+
 Copyright © Derek Blue 2019
 This software is distributed under a provisional MIT License. See the LICENSE file
 for more details.
